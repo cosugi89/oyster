@@ -1,0 +1,85 @@
+services:
+  mysqldb:
+    image: mysql:latest
+    container_name: mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: owdb
+      MYSQL_USER: owuser
+      MYSQL_PASSWORD: PassW0rd
+      TZ: Asia/Tokyo
+    ports:
+      - "3306:3306"
+    networks:
+      - ow-network
+
+  phpmyadmin:
+    image: arm64v8/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysqldb
+      PMA_PORT: 3306
+    ports:
+      - "8082:80"
+    networks:
+      - ow-network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ow-network
+
+  application1:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.app
+    container_name: application1
+    networks:
+      - ow-network
+
+  application2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.app
+    container_name: application2
+    networks:
+      - ow-network
+
+  webserver1:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.web
+    container_name: webserver1
+    ports:
+      - "8441:80"
+    networks:
+      - ow-network
+
+  webserver2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.web
+    container_name: webserver2
+    ports:
+      - "8442:80"
+    networks:
+      - ow-network
+
+  lb:
+    image: nginx:latest
+    container_name: lb
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./webserver/certs:/etc/nginx/certs
+      - ./webserver/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - ow-network
+
+networks:
+  ow-network:
+    driver: bridge
