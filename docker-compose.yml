@@ -14,7 +14,7 @@ services:
       - ow-network
 
   phpmyadmin:
-    image: arm64v8/phpmyadmin:latest
+    image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     environment:
       PMA_HOST: mysqldb

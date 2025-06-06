@@ -3,7 +3,7 @@ FROM maven:3.9.4-eclipse-temurin-17 as backend-build
 
 WORKDIR /build/backend
 COPY ./backend .
-RUN ./mvnw clean install -DskipTests
+RUN mvn clean install -DskipTests
 
 # デプロイ
 FROM openjdk:17-jdk
