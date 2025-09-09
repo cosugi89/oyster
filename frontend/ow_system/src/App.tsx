@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { AuthProvider } from "@/context/AuthContext";
+import Layout from "@/components/layout/Layout";
+import Home from "./pages/Home";
+import QuestionDetail from "@/pages/QuestionDetail";
+import Profile from "@/pages/Profile";
+import Tags from "@/pages/Tags";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+function Main() {
+  const navigate = useNavigate();
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <Card className="w-96 shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-2xl mb-2">Main Page</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-4">
+            <p className="text-gray-600 text-center">
+              Click the button below to go to the Home page.
+            </p>
+            <Button onClick={() => navigate("/home")} className="w-full">
+              Go to Home
+            </Button>
+          </CardContent>
+        </Card>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route
+            path="/home"
+            element={
+              <Layout>
+                <Home />
+              </Layout>
+            }
+          />
+          <Route
+            path="/question_detail/:id"
+            element={
+              <Layout>
+                <QuestionDetail />
+              </Layout>
+            }
+          />
+          <Route
+            path="/profile/:id"
+            element={
+              <Layout>
+                <Profile />
+              </Layout>
+            }
+          />
+          <Route
+            path="/tags"
+            element={
+              <Layout>
+                <Tags />
+              </Layout>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
