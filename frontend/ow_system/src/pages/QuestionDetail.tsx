@@ -30,10 +30,10 @@ export default function QuestionDetail() {
   );
   // Question に紐づく Answer を取得
   const [answers] = useState<Answer[]>(
-    Answers.filter((a) => a.question_id === questionId)
+    Answers.filter((a) => a.questionId === questionId)
   );
   // Question に紐づく ユーザー を取得
-  const user: User | undefined = users.find((u) => u.id === question?.user_id);
+  const user: User | undefined = users.find((u) => u.id === question?.userId);
 
   if (!question) {
     return <div className="p-8">質問が見つかりませんでした。</div>;
@@ -65,7 +65,7 @@ export default function QuestionDetail() {
               </Badge>
             ))}
             <p className="text-gray-600 text-sm">
-              {formatDate(question.updated_at)}
+              {formatDate(question.updatedAt)}
             </p>
           </CardFooter>
         </Card>
@@ -78,7 +78,7 @@ export default function QuestionDetail() {
           ) : (
             answers.map((answer) => {
               const user: User | undefined = users.find(
-                (u) => u.id === answer.user_id
+                (u) => u.id === answer.userId
               );
               return (
                 <Card key={answer.id} className="shadow-md">
@@ -90,7 +90,7 @@ export default function QuestionDetail() {
                       <CardTitle className="text-md font-semibold">
                         <p>{user ? user.name : "不明なユーザー"}</p>
                         <p className="text-gray-600 text-xs">
-                          {formatDate(answer.updated_at)}
+                          {formatDate(answer.updatedAt)}
                         </p>
                       </CardTitle>
                     </div>

@@ -10,11 +10,9 @@ export default function Profile() {
 
   const user: User | undefined = users.find((u) => u.id === userId);
   const userQuestions: Question[] = questions.filter((q) => {
-    return answers.some(
-      (a) => a.user_id === user?.id && a.question_id === q.id
-    );
+    return answers.some((a) => a.userId === user?.id && a.questionId === q.id);
   });
-  const userAnswers: Answer[] = answers.filter((a) => a.user_id === user?.id);
+  const userAnswers: Answer[] = answers.filter((a) => a.userId === user?.id);
 
   if (!user) {
     return <div className="p-8">ユーザーが見つかりませんでした。</div>;
@@ -64,9 +62,7 @@ export default function Profile() {
           <p className="text-gray-600">まだ回答はありません。</p>
         ) : (
           userAnswers.map((a) => {
-            const user: User | undefined = users.find(
-              (u) => u.id === a.user_id
-            );
+            const user: User | undefined = users.find((u) => u.id === a.userId);
             return (
               <Card key={a.id} className="shadow-md mb-2">
                 <CardHeader>

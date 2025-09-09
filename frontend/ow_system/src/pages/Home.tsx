@@ -20,7 +20,7 @@ export default function Home() {
     <section className="p-8 w-11/12">
       {questions.map((question: Question) => {
         const answer: Answer | undefined = answers.find(
-          (a) => question.id === a.question_id
+          (a) => question.id === a.questionId
         );
         return (
           <Accordion
@@ -58,7 +58,7 @@ export default function Home() {
                 {answer ? answer.content : "回答はまだありません"}
                 <div className="flex justify-between pr-10 items-center mt-2">
                   <p className="text-gray-600 text-sm">
-                    {formatDate(question.updated_at)} 投稿
+                    {formatDate(question.updatedAt)} 投稿
                   </p>
                   <Link to={`/question_detail/${question.id}`} className="">
                     <Button

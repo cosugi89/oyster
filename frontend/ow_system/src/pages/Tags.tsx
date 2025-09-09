@@ -45,7 +45,7 @@ export default function toLocaleDateString() {
           <Card key={q.id}>
             <CardHeader className="flex items-center justify-between">
               <span className="text-sm text-gray-500">
-                更新日: {q.updated_at.toLocaleDateString()}
+                更新日: {q.updatedAt.toLocaleDateString()}
               </span>
               {q.isResolved && (
                 <span className="text-xs text-green-600 font-bold">
