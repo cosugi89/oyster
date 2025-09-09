@@ -1,7 +1,9 @@
+"use client";
+
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import Layout from "@/components/layout/Layout";
-import Home from "./pages/Home";
+import Home from "@/pages/Home";
 import QuestionDetail from "@/pages/QuestionDetail";
 import Profile from "@/pages/Profile";
 import Tags from "@/pages/Tags";
